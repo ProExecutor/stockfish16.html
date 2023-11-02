@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Stockfish 16 Chess Engine</title>
+</head>
+<body>
+    <h1>Stockfish 16 Chess Engine</h1>
+    <button onclick="startEngine()">Start Engine</button>
+    <button onclick="stopEngine()">Stop Engine</button>
+    <script src="stockfish.js"></script>
+    <script>
+        var engine = STOCKFISH();
+        var started = false;
+
+        function startEngine() {
+            if (!started) {
+                engine.postMessage('uci');
+                started = true;
+            }
+        }
+
+        function stopEngine() {
+            if (started) {
+                engine.terminate();
+                started = false;
+            }
+        }
+
+        engine.onmessage = function(event) {
+            console.log(event.data ? event.data : event);
+        };
+    </script>
+</body>
+</html>
